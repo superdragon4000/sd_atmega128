@@ -1,0 +1,218 @@
+   1               		.file	"main.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__RAMPZ__ = 0x3b
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.section	.text.startup,"ax",@progbits
+   9               	.global	main
+  11               	main:
+  12 0000 CF93      		push r28
+  13 0002 DF93      		push r29
+  14 0004 CDB7      		in r28,__SP_L__
+  15 0006 DEB7      		in r29,__SP_H__
+  16 0008 C150      		subi r28,1
+  17 000a D240      		sbci r29,2
+  18 000c 0FB6      		in __tmp_reg__,__SREG__
+  19 000e F894      		cli
+  20 0010 DEBF      		out __SP_H__,r29
+  21 0012 0FBE      		out __SREG__,__tmp_reg__
+  22 0014 CDBF      		out __SP_L__,r28
+  23               	/* prologue: function */
+  24               	/* frame size = 513 */
+  25               	/* stack size = 515 */
+  26               	.L__stack_usage = 515
+  27 0016 0E94 0000 		call UART_init
+  28 001a 80E0      		ldi r24,0
+  29 001c 93E1      		ldi r25,lo8(19)
+  30 001e 0E94 0000 		call SPI_init
+  31 0022 0E94 0000 		call SD_init
+  32 0026 8823      		tst r24
+  33 0028 01F0      		breq .L2
+  34 002a 80E0      		ldi r24,lo8(__c.2847)
+  35 002c 90E0      		ldi r25,hi8(__c.2847)
+  36 002e 0E94 0000 		call UART_puts_p
+  37 0032 00C0      		rjmp .L3
+  38               	.L2:
+  39 0034 80E0      		ldi r24,lo8(__c.2849)
+  40 0036 90E0      		ldi r25,hi8(__c.2849)
+  41 0038 0E94 0000 		call UART_puts_p
+  42 003c 80E0      		ldi r24,lo8(__c.2851)
+  43 003e 90E0      		ldi r25,hi8(__c.2851)
+  44 0040 0E94 0000 		call UART_puts_p
+  45 0044 80E0      		ldi r24,0
+  46 0046 0E94 0000 		call UART_puthex8
+  47 004a 80E0      		ldi r24,0
+  48 004c 0E94 0000 		call UART_puthex8
+  49 0050 80E0      		ldi r24,0
+  50 0052 0E94 0000 		call UART_puthex8
+  51 0056 80E0      		ldi r24,0
+  52 0058 0E94 0000 		call UART_puthex8
+  53 005c 7E01      		movw r14,r28
+  54 005e 8FEF      		ldi r24,-1
+  55 0060 E81A      		sub r14,r24
+  56 0062 8DEF      		ldi r24,-3
+  57 0064 F80A      		sbc r15,r24
+  58 0066 9701      		movw r18,r14
+  59 0068 AE01      		movw r20,r28
+  60 006a 4F5F      		subi r20,-1
+  61 006c 5F4F      		sbci r21,-1
+  62 006e 60E0      		ldi r22,0
+  63 0070 70E0      		ldi r23,0
+  64 0072 CB01      		movw r24,r22
+  65 0074 0E94 0000 		call SD_readSingleBlock
+  66 0078 182F      		mov r17,r24
+  67 007a 80E0      		ldi r24,lo8(__c.2853)
+  68 007c 90E0      		ldi r25,hi8(__c.2853)
+  69 007e 0E94 0000 		call UART_puts_p
+  70 0082 812F      		mov r24,r17
+  71 0084 0E94 0000 		call SD_printR1
+  72 0088 1111      		cpse r17,__zero_reg__
+  73 008a 00C0      		rjmp .L4
+  74 008c F701      		movw r30,r14
+  75 008e 8081      		ld r24,Z
+  76 0090 8E3F      		cpi r24,lo8(-2)
+  77 0092 01F4      		brne .L4
+  78 0094 CE01      		movw r24,r28
+  79 0096 0196      		adiw r24,1
+  80 0098 0E94 0000 		call SD_printBuf
+  81               	.L6:
+  82 009c 8E01      		movw r16,r28
+  83 009e 0F5F      		subi r16,-1
+  84 00a0 1F4F      		sbci r17,-1
+  85 00a2 85E5      		ldi r24,lo8(85)
+  86 00a4 00C0      		rjmp .L5
+  87               	.L4:
+  88 00a6 F701      		movw r30,r14
+  89 00a8 8081      		ld r24,Z
+  90 00aa 807F      		andi r24,lo8(-16)
+  91 00ac 01F4      		brne .L6
+  92 00ae 80E0      		ldi r24,lo8(__c.2855)
+  93 00b0 90E0      		ldi r25,hi8(__c.2855)
+  94 00b2 0E94 0000 		call UART_puts_p
+  95 00b6 F701      		movw r30,r14
+  96 00b8 8081      		ld r24,Z
+  97 00ba 0E94 0000 		call SD_printDataErrToken
+  98 00be 00C0      		rjmp .L6
+  99               	.L5:
+ 100 00c0 F801      		movw r30,r16
+ 101 00c2 8193      		st Z+,r24
+ 102 00c4 8F01      		movw r16,r30
+ 103 00c6 EE15      		cp r30,r14
+ 104 00c8 FF05      		cpc r31,r15
+ 105 00ca 01F4      		brne .L5
+ 106 00cc 80E0      		ldi r24,lo8(__c.2861)
+ 107 00ce 90E0      		ldi r25,hi8(__c.2861)
+ 108 00d0 0E94 0000 		call UART_puts_p
+ 109 00d4 80E0      		ldi r24,0
+ 110 00d6 0E94 0000 		call UART_puthex8
+ 111 00da 80E0      		ldi r24,0
+ 112 00dc 0E94 0000 		call UART_puthex8
+ 113 00e0 81E0      		ldi r24,lo8(1)
+ 114 00e2 0E94 0000 		call UART_puthex8
+ 115 00e6 80E0      		ldi r24,0
+ 116 00e8 0E94 0000 		call UART_puthex8
+ 117 00ec 9801      		movw r18,r16
+ 118 00ee AE01      		movw r20,r28
+ 119 00f0 4F5F      		subi r20,-1
+ 120 00f2 5F4F      		sbci r21,-1
+ 121 00f4 60E0      		ldi r22,0
+ 122 00f6 71E0      		ldi r23,lo8(1)
+ 123 00f8 80E0      		ldi r24,0
+ 124 00fa 90E0      		ldi r25,0
+ 125 00fc 0E94 0000 		call SD_writeSingleBlock
+ 126 0100 F82E      		mov r15,r24
+ 127 0102 80E0      		ldi r24,lo8(__c.2863)
+ 128 0104 90E0      		ldi r25,hi8(__c.2863)
+ 129 0106 0E94 0000 		call UART_puts_p
+ 130 010a 8F2D      		mov r24,r15
+ 131 010c 0E94 0000 		call SD_printR1
+ 132 0110 F110      		cpse r15,__zero_reg__
+ 133 0112 00C0      		rjmp .L3
+ 134 0114 F801      		movw r30,r16
+ 135 0116 8081      		ld r24,Z
+ 136 0118 8530      		cpi r24,lo8(5)
+ 137 011a 01F4      		brne .L3
+ 138 011c 80E0      		ldi r24,lo8(__c.2865)
+ 139 011e 90E0      		ldi r25,hi8(__c.2865)
+ 140 0120 0E94 0000 		call UART_puts_p
+ 141               	.L3:
+ 142               	.L8:
+ 143 0124 00C0      		rjmp .L8
+ 145               		.section	.progmem.data,"a",@progbits
+ 148               	__c.2865:
+ 149 0000 5772 6974 		.string	"Write successful\r\n"
+ 149      6520 7375 
+ 149      6363 6573 
+ 149      7366 756C 
+ 149      0D0A 00
+ 152               	__c.2863:
+ 153 0013 0D0A 5265 		.string	"\r\nResponse:\r\n"
+ 153      7370 6F6E 
+ 153      7365 3A0D 
+ 153      0A00 
+ 156               	__c.2861:
+ 157 0021 5772 6974 		.string	"Writing 0x55 to sector: 0x"
+ 157      696E 6720 
+ 157      3078 3535 
+ 157      2074 6F20 
+ 157      7365 6374 
+ 160               	__c.2855:
+ 161 003c 4572 726F 		.string	"Error token:\r\n"
+ 161      7220 746F 
+ 161      6B65 6E3A 
+ 161      0D0A 00
+ 164               	__c.2853:
+ 165 004b 0D0A 5265 		.string	"\r\nResponse:\r\n"
+ 165      7370 6F6E 
+ 165      7365 3A0D 
+ 165      0A00 
+ 168               	__c.2851:
+ 169 0059 0D0A 5265 		.string	"\r\nReading sector: 0x"
+ 169      6164 696E 
+ 169      6720 7365 
+ 169      6374 6F72 
+ 169      3A20 3078 
+ 172               	__c.2849:
+ 173 006e 5344 2043 		.string	"SD Card initialized\r\n"
+ 173      6172 6420 
+ 173      696E 6974 
+ 173      6961 6C69 
+ 173      7A65 640D 
+ 176               	__c.2847:
+ 177 0084 4572 726F 		.string	"Error initializaing SD CARD\r\n"
+ 177      7220 696E 
+ 177      6974 6961 
+ 177      6C69 7A61 
+ 177      696E 6720 
+ 178               		.ident	"GCC: (GNU) 5.4.0"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 main.c
+     /tmp/ccdjIzHq.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccdjIzHq.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccdjIzHq.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccdjIzHq.s:5      *ABS*:000000000000003b __RAMPZ__
+     /tmp/ccdjIzHq.s:6      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccdjIzHq.s:7      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccdjIzHq.s:11     .text.startup:0000000000000000 main
+     /tmp/ccdjIzHq.s:176    .progmem.data:0000000000000084 __c.2847
+     /tmp/ccdjIzHq.s:172    .progmem.data:000000000000006e __c.2849
+     /tmp/ccdjIzHq.s:168    .progmem.data:0000000000000059 __c.2851
+     /tmp/ccdjIzHq.s:164    .progmem.data:000000000000004b __c.2853
+     /tmp/ccdjIzHq.s:160    .progmem.data:000000000000003c __c.2855
+     /tmp/ccdjIzHq.s:156    .progmem.data:0000000000000021 __c.2861
+     /tmp/ccdjIzHq.s:152    .progmem.data:0000000000000013 __c.2863
+     /tmp/ccdjIzHq.s:148    .progmem.data:0000000000000000 __c.2865
+
+UNDEFINED SYMBOLS
+UART_init
+SPI_init
+SD_init
+UART_puts_p
+UART_puthex8
+SD_readSingleBlock
+SD_printR1
+SD_printBuf
+SD_printDataErrToken
+SD_writeSingleBlock

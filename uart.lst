@@ -1,0 +1,145 @@
+   1               		.file	"uart.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__RAMPZ__ = 0x3b
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	UART_init
+  11               	UART_init:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14               	/* stack size = 0 */
+  15               	.L__stack_usage = 0
+  16 0000 1092 C500 		sts 197,__zero_reg__
+  17 0004 80E1      		ldi r24,lo8(16)
+  18 0006 8093 C400 		sts 196,r24
+  19 000a E1EC      		ldi r30,lo8(-63)
+  20 000c F0E0      		ldi r31,0
+  21 000e 8081      		ld r24,Z
+  22 0010 8861      		ori r24,lo8(24)
+  23 0012 8083      		st Z,r24
+  24 0014 0895      		ret
+  26               	.global	UART_putc
+  28               	UART_putc:
+  29               	/* prologue: function */
+  30               	/* frame size = 0 */
+  31               	/* stack size = 0 */
+  32               	.L__stack_usage = 0
+  33               	.L3:
+  34 0016 9091 C000 		lds r25,192
+  35 001a 95FF      		sbrs r25,5
+  36 001c 00C0      		rjmp .L3
+  37 001e 8093 C600 		sts 198,r24
+  38 0022 0895      		ret
+  40               	.global	UART_puts
+  42               	UART_puts:
+  43 0024 CF93      		push r28
+  44 0026 DF93      		push r29
+  45               	/* prologue: function */
+  46               	/* frame size = 0 */
+  47               	/* stack size = 2 */
+  48               	.L__stack_usage = 2
+  49 0028 EC01      		movw r28,r24
+  50               	.L8:
+  51 002a 8991      		ld r24,Y+
+  52 002c 8823      		tst r24
+  53 002e 01F0      		breq .L10
+  54 0030 0E94 0000 		call UART_putc
+  55 0034 00C0      		rjmp .L8
+  56               	.L10:
+  57               	/* epilogue start */
+  58 0036 DF91      		pop r29
+  59 0038 CF91      		pop r28
+  60 003a 0895      		ret
+  62               	.global	UART_puthex8
+  64               	UART_puthex8:
+  65 003c CF93      		push r28
+  66               	/* prologue: function */
+  67               	/* frame size = 0 */
+  68               	/* stack size = 1 */
+  69               	.L__stack_usage = 1
+  70 003e 282F      		mov r18,r24
+  71 0040 2295      		swap r18
+  72 0042 2F70      		andi r18,lo8(15)
+  73 0044 982F      		mov r25,r24
+  74 0046 9F70      		andi r25,lo8(15)
+  75 0048 2A30      		cpi r18,lo8(10)
+  76 004a 00F4      		brsh .L14
+  77 004c 80E3      		ldi r24,lo8(48)
+  78 004e 00C0      		rjmp .L12
+  79               	.L14:
+  80 0050 87E3      		ldi r24,lo8(55)
+  81               	.L12:
+  82 0052 820F      		add r24,r18
+  83 0054 9A30      		cpi r25,lo8(10)
+  84 0056 00F4      		brsh .L15
+  85 0058 C0E3      		ldi r28,lo8(48)
+  86 005a 00C0      		rjmp .L13
+  87               	.L15:
+  88 005c C7E3      		ldi r28,lo8(55)
+  89               	.L13:
+  90 005e C90F      		add r28,r25
+  91 0060 0E94 0000 		call UART_putc
+  92 0064 8C2F      		mov r24,r28
+  93               	/* epilogue start */
+  94 0066 CF91      		pop r28
+  95 0068 0C94 0000 		jmp UART_putc
+  97               	.global	UART_getc
+  99               	UART_getc:
+ 100               	/* prologue: function */
+ 101               	/* frame size = 0 */
+ 102               	/* stack size = 0 */
+ 103               	.L__stack_usage = 0
+ 104               	.L17:
+ 105 006c 8091 C000 		lds r24,192
+ 106 0070 87FF      		sbrs r24,7
+ 107 0072 00C0      		rjmp .L17
+ 108 0074 8091 C600 		lds r24,198
+ 109 0078 0895      		ret
+ 111               	.global	UART_puts_p
+ 113               	UART_puts_p:
+ 114 007a CF93      		push r28
+ 115 007c DF93      		push r29
+ 116               	/* prologue: function */
+ 117               	/* frame size = 0 */
+ 118               	/* stack size = 2 */
+ 119               	.L__stack_usage = 2
+ 120 007e FC01      		movw r30,r24
+ 121               	.L20:
+ 122               	/* #APP */
+ 123               	 ;  64 "uart.c" 1
+ 124 0080 8491      		lpm r24, Z
+ 125               		
+ 126               	 ;  0 "" 2
+ 127               	/* #NOAPP */
+ 128 0082 EF01      		movw r28,r30
+ 129 0084 2196      		adiw r28,1
+ 130 0086 8823      		tst r24
+ 131 0088 01F0      		breq .L22
+ 132 008a 0E94 0000 		call UART_putc
+ 133 008e FE01      		movw r30,r28
+ 134 0090 00C0      		rjmp .L20
+ 135               	.L22:
+ 136               	/* epilogue start */
+ 137 0092 DF91      		pop r29
+ 138 0094 CF91      		pop r28
+ 139 0096 0895      		ret
+ 141               		.ident	"GCC: (GNU) 5.4.0"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 uart.c
+     /tmp/cc3evX3r.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/cc3evX3r.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/cc3evX3r.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/cc3evX3r.s:5      *ABS*:000000000000003b __RAMPZ__
+     /tmp/cc3evX3r.s:6      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/cc3evX3r.s:7      *ABS*:0000000000000001 __zero_reg__
+     /tmp/cc3evX3r.s:11     .text:0000000000000000 UART_init
+     /tmp/cc3evX3r.s:28     .text:0000000000000016 UART_putc
+     /tmp/cc3evX3r.s:42     .text:0000000000000024 UART_puts
+     /tmp/cc3evX3r.s:64     .text:000000000000003c UART_puthex8
+     /tmp/cc3evX3r.s:99     .text:000000000000006c UART_getc
+     /tmp/cc3evX3r.s:113    .text:000000000000007a UART_puts_p
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,864 @@
+   1               		.file	"sdprint.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__RAMPZ__ = 0x3b
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	SD_printR1
+  11               	SD_printR1:
+  12 0000 CF93      		push r28
+  13               	/* prologue: function */
+  14               	/* frame size = 0 */
+  15               	/* stack size = 1 */
+  16               	.L__stack_usage = 1
+  17 0002 8F3F      		cpi r24,lo8(-1)
+  18 0004 01F4      		brne .L2
+  19 0006 80E0      		ldi r24,lo8(__c.2712)
+  20 0008 90E0      		ldi r25,hi8(__c.2712)
+  21 000a 00C0      		rjmp .L30
+  22               	.L2:
+  23 000c 87FF      		sbrs r24,7
+  24 000e 00C0      		rjmp .L3
+  25 0010 80E0      		ldi r24,lo8(__c.2714)
+  26 0012 90E0      		ldi r25,hi8(__c.2714)
+  27 0014 00C0      		rjmp .L30
+  28               	.L3:
+  29 0016 8111      		cpse r24,__zero_reg__
+  30 0018 00C0      		rjmp .L4
+  31 001a 80E0      		ldi r24,lo8(__c.2716)
+  32 001c 90E0      		ldi r25,hi8(__c.2716)
+  33 001e 00C0      		rjmp .L30
+  34               	.L4:
+  35 0020 C82F      		mov r28,r24
+  36 0022 86FF      		sbrs r24,6
+  37 0024 00C0      		rjmp .L5
+  38 0026 80E0      		ldi r24,lo8(__c.2718)
+  39 0028 90E0      		ldi r25,hi8(__c.2718)
+  40 002a 0E94 0000 		call UART_puts_p
+  41               	.L5:
+  42 002e C5FF      		sbrs r28,5
+  43 0030 00C0      		rjmp .L6
+  44 0032 80E0      		ldi r24,lo8(__c.2720)
+  45 0034 90E0      		ldi r25,hi8(__c.2720)
+  46 0036 0E94 0000 		call UART_puts_p
+  47               	.L6:
+  48 003a C4FF      		sbrs r28,4
+  49 003c 00C0      		rjmp .L7
+  50 003e 80E0      		ldi r24,lo8(__c.2722)
+  51 0040 90E0      		ldi r25,hi8(__c.2722)
+  52 0042 0E94 0000 		call UART_puts_p
+  53               	.L7:
+  54 0046 C3FF      		sbrs r28,3
+  55 0048 00C0      		rjmp .L8
+  56 004a 80E0      		ldi r24,lo8(__c.2724)
+  57 004c 90E0      		ldi r25,hi8(__c.2724)
+  58 004e 0E94 0000 		call UART_puts_p
+  59               	.L8:
+  60 0052 C2FF      		sbrs r28,2
+  61 0054 00C0      		rjmp .L9
+  62 0056 80E0      		ldi r24,lo8(__c.2726)
+  63 0058 90E0      		ldi r25,hi8(__c.2726)
+  64 005a 0E94 0000 		call UART_puts_p
+  65               	.L9:
+  66 005e C1FF      		sbrs r28,1
+  67 0060 00C0      		rjmp .L10
+  68 0062 80E0      		ldi r24,lo8(__c.2728)
+  69 0064 90E0      		ldi r25,hi8(__c.2728)
+  70 0066 0E94 0000 		call UART_puts_p
+  71               	.L10:
+  72 006a C0FF      		sbrs r28,0
+  73 006c 00C0      		rjmp .L1
+  74 006e 80E0      		ldi r24,lo8(__c.2730)
+  75 0070 90E0      		ldi r25,hi8(__c.2730)
+  76               	.L30:
+  77               	/* epilogue start */
+  78 0072 CF91      		pop r28
+  79 0074 0C94 0000 		jmp UART_puts_p
+  80               	.L1:
+  81               	/* epilogue start */
+  82 0078 CF91      		pop r28
+  83 007a 0895      		ret
+  85               	.global	SD_printR2
+  87               	SD_printR2:
+  88 007c CF93      		push r28
+  89 007e DF93      		push r29
+  90               	/* prologue: function */
+  91               	/* frame size = 0 */
+  92               	/* stack size = 2 */
+  93               	.L__stack_usage = 2
+  94 0080 EC01      		movw r28,r24
+  95 0082 8881      		ld r24,Y
+  96 0084 0E94 0000 		call SD_printR1
+  97 0088 8881      		ld r24,Y
+  98 008a 8F3F      		cpi r24,lo8(-1)
+  99 008c 01F4      		brne .+2
+ 100 008e 00C0      		rjmp .L32
+ 101 0090 8981      		ldd r24,Y+1
+ 102 0092 8111      		cpse r24,__zero_reg__
+ 103 0094 00C0      		rjmp .L35
+ 104 0096 80E0      		ldi r24,lo8(__c.2735)
+ 105 0098 90E0      		ldi r25,hi8(__c.2735)
+ 106 009a 0E94 0000 		call UART_puts_p
+ 107               	.L35:
+ 108 009e 8981      		ldd r24,Y+1
+ 109 00a0 87FF      		sbrs r24,7
+ 110 00a2 00C0      		rjmp .L36
+ 111 00a4 80E0      		ldi r24,lo8(__c.2737)
+ 112 00a6 90E0      		ldi r25,hi8(__c.2737)
+ 113 00a8 0E94 0000 		call UART_puts_p
+ 114               	.L36:
+ 115 00ac 8981      		ldd r24,Y+1
+ 116 00ae 86FF      		sbrs r24,6
+ 117 00b0 00C0      		rjmp .L37
+ 118 00b2 80E0      		ldi r24,lo8(__c.2739)
+ 119 00b4 90E0      		ldi r25,hi8(__c.2739)
+ 120 00b6 0E94 0000 		call UART_puts_p
+ 121               	.L37:
+ 122 00ba 8981      		ldd r24,Y+1
+ 123 00bc 85FF      		sbrs r24,5
+ 124 00be 00C0      		rjmp .L38
+ 125 00c0 80E0      		ldi r24,lo8(__c.2741)
+ 126 00c2 90E0      		ldi r25,hi8(__c.2741)
+ 127 00c4 0E94 0000 		call UART_puts_p
+ 128               	.L38:
+ 129 00c8 8981      		ldd r24,Y+1
+ 130 00ca 84FF      		sbrs r24,4
+ 131 00cc 00C0      		rjmp .L39
+ 132 00ce 80E0      		ldi r24,lo8(__c.2743)
+ 133 00d0 90E0      		ldi r25,hi8(__c.2743)
+ 134 00d2 0E94 0000 		call UART_puts_p
+ 135               	.L39:
+ 136 00d6 8981      		ldd r24,Y+1
+ 137 00d8 83FF      		sbrs r24,3
+ 138 00da 00C0      		rjmp .L40
+ 139 00dc 80E0      		ldi r24,lo8(__c.2745)
+ 140 00de 90E0      		ldi r25,hi8(__c.2745)
+ 141 00e0 0E94 0000 		call UART_puts_p
+ 142               	.L40:
+ 143 00e4 8981      		ldd r24,Y+1
+ 144 00e6 82FF      		sbrs r24,2
+ 145 00e8 00C0      		rjmp .L41
+ 146 00ea 80E0      		ldi r24,lo8(__c.2747)
+ 147 00ec 90E0      		ldi r25,hi8(__c.2747)
+ 148 00ee 0E94 0000 		call UART_puts_p
+ 149               	.L41:
+ 150 00f2 8981      		ldd r24,Y+1
+ 151 00f4 81FF      		sbrs r24,1
+ 152 00f6 00C0      		rjmp .L42
+ 153 00f8 80E0      		ldi r24,lo8(__c.2749)
+ 154 00fa 90E0      		ldi r25,hi8(__c.2749)
+ 155 00fc 0E94 0000 		call UART_puts_p
+ 156               	.L42:
+ 157 0100 8981      		ldd r24,Y+1
+ 158 0102 80FF      		sbrs r24,0
+ 159 0104 00C0      		rjmp .L32
+ 160 0106 80E0      		ldi r24,lo8(__c.2751)
+ 161 0108 90E0      		ldi r25,hi8(__c.2751)
+ 162               	/* epilogue start */
+ 163 010a DF91      		pop r29
+ 164 010c CF91      		pop r28
+ 165 010e 0C94 0000 		jmp UART_puts_p
+ 166               	.L32:
+ 167               	/* epilogue start */
+ 168 0112 DF91      		pop r29
+ 169 0114 CF91      		pop r28
+ 170 0116 0895      		ret
+ 172               	.global	SD_printR3
+ 174               	SD_printR3:
+ 175 0118 CF93      		push r28
+ 176 011a DF93      		push r29
+ 177               	/* prologue: function */
+ 178               	/* frame size = 0 */
+ 179               	/* stack size = 2 */
+ 180               	.L__stack_usage = 2
+ 181 011c EC01      		movw r28,r24
+ 182 011e 8881      		ld r24,Y
+ 183 0120 0E94 0000 		call SD_printR1
+ 184 0124 8881      		ld r24,Y
+ 185 0126 8230      		cpi r24,lo8(2)
+ 186 0128 00F0      		brlo .+2
+ 187 012a 00C0      		rjmp .L65
+ 188 012c 80E0      		ldi r24,lo8(__c.2756)
+ 189 012e 90E0      		ldi r25,hi8(__c.2756)
+ 190 0130 0E94 0000 		call UART_puts_p
+ 191 0134 8981      		ldd r24,Y+1
+ 192 0136 86FF      		sbrs r24,6
+ 193 0138 00C0      		rjmp .L67
+ 194 013a 80E0      		ldi r24,lo8(__c.2758)
+ 195 013c 90E0      		ldi r25,hi8(__c.2758)
+ 196 013e 0E94 0000 		call UART_puts_p
+ 197 0142 80E0      		ldi r24,lo8(__c.2760)
+ 198 0144 90E0      		ldi r25,hi8(__c.2760)
+ 199 0146 0E94 0000 		call UART_puts_p
+ 200 014a 8981      		ldd r24,Y+1
+ 201 014c 86FF      		sbrs r24,6
+ 202 014e 00C0      		rjmp .L68
+ 203 0150 80E0      		ldi r24,lo8(__c.2762)
+ 204 0152 90E0      		ldi r25,hi8(__c.2762)
+ 205 0154 00C0      		rjmp .L100
+ 206               	.L68:
+ 207 0156 80E0      		ldi r24,lo8(__c.2764)
+ 208 0158 90E0      		ldi r25,hi8(__c.2764)
+ 209 015a 00C0      		rjmp .L100
+ 210               	.L67:
+ 211 015c 80E0      		ldi r24,lo8(__c.2766)
+ 212 015e 90E0      		ldi r25,hi8(__c.2766)
+ 213               	.L100:
+ 214 0160 0E94 0000 		call UART_puts_p
+ 215 0164 80E0      		ldi r24,lo8(__c.2768)
+ 216 0166 90E0      		ldi r25,hi8(__c.2768)
+ 217 0168 0E94 0000 		call UART_puts_p
+ 218 016c 8B81      		ldd r24,Y+3
+ 219 016e 87FF      		sbrs r24,7
+ 220 0170 00C0      		rjmp .L70
+ 221 0172 80E0      		ldi r24,lo8(__c.2770)
+ 222 0174 90E0      		ldi r25,hi8(__c.2770)
+ 223 0176 0E94 0000 		call UART_puts_p
+ 224               	.L70:
+ 225 017a 8A81      		ldd r24,Y+2
+ 226 017c 80FF      		sbrs r24,0
+ 227 017e 00C0      		rjmp .L71
+ 228 0180 80E0      		ldi r24,lo8(__c.2772)
+ 229 0182 90E0      		ldi r25,hi8(__c.2772)
+ 230 0184 0E94 0000 		call UART_puts_p
+ 231               	.L71:
+ 232 0188 8A81      		ldd r24,Y+2
+ 233 018a 81FF      		sbrs r24,1
+ 234 018c 00C0      		rjmp .L72
+ 235 018e 80E0      		ldi r24,lo8(__c.2774)
+ 236 0190 90E0      		ldi r25,hi8(__c.2774)
+ 237 0192 0E94 0000 		call UART_puts_p
+ 238               	.L72:
+ 239 0196 8A81      		ldd r24,Y+2
+ 240 0198 82FF      		sbrs r24,2
+ 241 019a 00C0      		rjmp .L73
+ 242 019c 80E0      		ldi r24,lo8(__c.2776)
+ 243 019e 90E0      		ldi r25,hi8(__c.2776)
+ 244 01a0 0E94 0000 		call UART_puts_p
+ 245               	.L73:
+ 246 01a4 8A81      		ldd r24,Y+2
+ 247 01a6 83FF      		sbrs r24,3
+ 248 01a8 00C0      		rjmp .L74
+ 249 01aa 80E0      		ldi r24,lo8(__c.2778)
+ 250 01ac 90E0      		ldi r25,hi8(__c.2778)
+ 251 01ae 0E94 0000 		call UART_puts_p
+ 252               	.L74:
+ 253 01b2 8A81      		ldd r24,Y+2
+ 254 01b4 84FF      		sbrs r24,4
+ 255 01b6 00C0      		rjmp .L75
+ 256 01b8 80E0      		ldi r24,lo8(__c.2780)
+ 257 01ba 90E0      		ldi r25,hi8(__c.2780)
+ 258 01bc 0E94 0000 		call UART_puts_p
+ 259               	.L75:
+ 260 01c0 8A81      		ldd r24,Y+2
+ 261 01c2 85FF      		sbrs r24,5
+ 262 01c4 00C0      		rjmp .L76
+ 263 01c6 80E0      		ldi r24,lo8(__c.2782)
+ 264 01c8 90E0      		ldi r25,hi8(__c.2782)
+ 265 01ca 0E94 0000 		call UART_puts_p
+ 266               	.L76:
+ 267 01ce 8A81      		ldd r24,Y+2
+ 268 01d0 86FF      		sbrs r24,6
+ 269 01d2 00C0      		rjmp .L77
+ 270 01d4 80E0      		ldi r24,lo8(__c.2784)
+ 271 01d6 90E0      		ldi r25,hi8(__c.2784)
+ 272 01d8 0E94 0000 		call UART_puts_p
+ 273               	.L77:
+ 274 01dc 8A81      		ldd r24,Y+2
+ 275 01de 87FF      		sbrs r24,7
+ 276 01e0 00C0      		rjmp .L78
+ 277 01e2 80E0      		ldi r24,lo8(__c.2786)
+ 278 01e4 90E0      		ldi r25,hi8(__c.2786)
+ 279 01e6 0E94 0000 		call UART_puts_p
+ 280               	.L78:
+ 281 01ea 80E0      		ldi r24,lo8(__c.2788)
+ 282 01ec 90E0      		ldi r25,hi8(__c.2788)
+ 283               	/* epilogue start */
+ 284 01ee DF91      		pop r29
+ 285 01f0 CF91      		pop r28
+ 286 01f2 0C94 0000 		jmp UART_puts_p
+ 287               	.L65:
+ 288               	/* epilogue start */
+ 289 01f6 DF91      		pop r29
+ 290 01f8 CF91      		pop r28
+ 291 01fa 0895      		ret
+ 293               	.global	SD_printR7
+ 295               	SD_printR7:
+ 296 01fc CF93      		push r28
+ 297 01fe DF93      		push r29
+ 298               	/* prologue: function */
+ 299               	/* frame size = 0 */
+ 300               	/* stack size = 2 */
+ 301               	.L__stack_usage = 2
+ 302 0200 EC01      		movw r28,r24
+ 303 0202 8881      		ld r24,Y
+ 304 0204 0E94 0000 		call SD_printR1
+ 305 0208 8881      		ld r24,Y
+ 306 020a 8230      		cpi r24,lo8(2)
+ 307 020c 00F4      		brsh .L101
+ 308 020e 80E0      		ldi r24,lo8(__c.2793)
+ 309 0210 90E0      		ldi r25,hi8(__c.2793)
+ 310 0212 0E94 0000 		call UART_puts_p
+ 311 0216 80E0      		ldi r24,0
+ 312 0218 0E94 0000 		call UART_puthex8
+ 313 021c 80E0      		ldi r24,lo8(__c.2795)
+ 314 021e 90E0      		ldi r25,hi8(__c.2795)
+ 315 0220 0E94 0000 		call UART_puts_p
+ 316 0224 80E0      		ldi r24,lo8(__c.2797)
+ 317 0226 90E0      		ldi r25,hi8(__c.2797)
+ 318 0228 0E94 0000 		call UART_puts_p
+ 319 022c 8B81      		ldd r24,Y+3
+ 320 022e 8F71      		andi r24,lo8(31)
+ 321 0230 8130      		cpi r24,lo8(1)
+ 322 0232 01F4      		brne .L103
+ 323 0234 80E0      		ldi r24,lo8(__c.2799)
+ 324 0236 90E0      		ldi r25,hi8(__c.2799)
+ 325 0238 00C0      		rjmp .L108
+ 326               	.L103:
+ 327 023a 8230      		cpi r24,lo8(2)
+ 328 023c 01F4      		brne .L105
+ 329 023e 80E0      		ldi r24,lo8(__c.2801)
+ 330 0240 90E0      		ldi r25,hi8(__c.2801)
+ 331 0242 00C0      		rjmp .L108
+ 332               	.L105:
+ 333 0244 8430      		cpi r24,lo8(4)
+ 334 0246 01F4      		brne .L106
+ 335 0248 80E0      		ldi r24,lo8(__c.2803)
+ 336 024a 90E0      		ldi r25,hi8(__c.2803)
+ 337 024c 00C0      		rjmp .L108
+ 338               	.L106:
+ 339 024e 8830      		cpi r24,lo8(8)
+ 340 0250 01F4      		brne .L107
+ 341 0252 80E0      		ldi r24,lo8(__c.2805)
+ 342 0254 90E0      		ldi r25,hi8(__c.2805)
+ 343 0256 00C0      		rjmp .L108
+ 344               	.L107:
+ 345 0258 80E0      		ldi r24,lo8(__c.2807)
+ 346 025a 90E0      		ldi r25,hi8(__c.2807)
+ 347               	.L108:
+ 348 025c 0E94 0000 		call UART_puts_p
+ 349 0260 80E0      		ldi r24,lo8(__c.2809)
+ 350 0262 90E0      		ldi r25,hi8(__c.2809)
+ 351 0264 0E94 0000 		call UART_puts_p
+ 352 0268 8C81      		ldd r24,Y+4
+ 353 026a 0E94 0000 		call UART_puthex8
+ 354 026e 80E0      		ldi r24,lo8(__c.2811)
+ 355 0270 90E0      		ldi r25,hi8(__c.2811)
+ 356               	/* epilogue start */
+ 357 0272 DF91      		pop r29
+ 358 0274 CF91      		pop r28
+ 359 0276 0C94 0000 		jmp UART_puts_p
+ 360               	.L101:
+ 361               	/* epilogue start */
+ 362 027a DF91      		pop r29
+ 363 027c CF91      		pop r28
+ 364 027e 0895      		ret
+ 366               	.global	SD_printCSD
+ 368               	SD_printCSD:
+ 369 0280 CF93      		push r28
+ 370 0282 DF93      		push r29
+ 371               	/* prologue: function */
+ 372               	/* frame size = 0 */
+ 373               	/* stack size = 2 */
+ 374               	.L__stack_usage = 2
+ 375 0284 EC01      		movw r28,r24
+ 376 0286 80E0      		ldi r24,lo8(__c.2816)
+ 377 0288 90E0      		ldi r25,hi8(__c.2816)
+ 378 028a 0E94 0000 		call UART_puts_p
+ 379 028e 80E0      		ldi r24,lo8(__c.2818)
+ 380 0290 90E0      		ldi r25,hi8(__c.2818)
+ 381 0292 0E94 0000 		call UART_puts_p
+ 382 0296 8881      		ld r24,Y
+ 383 0298 8295      		swap r24
+ 384 029a 8695      		lsr r24
+ 385 029c 8695      		lsr r24
+ 386 029e 8370      		andi r24,lo8(3)
+ 387 02a0 0E94 0000 		call UART_puthex8
+ 388 02a4 80E0      		ldi r24,lo8(__c.2820)
+ 389 02a6 90E0      		ldi r25,hi8(__c.2820)
+ 390 02a8 0E94 0000 		call UART_puts_p
+ 391 02ac 80E0      		ldi r24,lo8(__c.2822)
+ 392 02ae 90E0      		ldi r25,hi8(__c.2822)
+ 393 02b0 0E94 0000 		call UART_puts_p
+ 394 02b4 8981      		ldd r24,Y+1
+ 395 02b6 0E94 0000 		call UART_puthex8
+ 396 02ba 80E0      		ldi r24,lo8(__c.2824)
+ 397 02bc 90E0      		ldi r25,hi8(__c.2824)
+ 398 02be 0E94 0000 		call UART_puts_p
+ 399 02c2 80E0      		ldi r24,lo8(__c.2826)
+ 400 02c4 90E0      		ldi r25,hi8(__c.2826)
+ 401 02c6 0E94 0000 		call UART_puts_p
+ 402 02ca 8A81      		ldd r24,Y+2
+ 403 02cc 0E94 0000 		call UART_puthex8
+ 404 02d0 80E0      		ldi r24,lo8(__c.2828)
+ 405 02d2 90E0      		ldi r25,hi8(__c.2828)
+ 406 02d4 0E94 0000 		call UART_puts_p
+ 407 02d8 80E0      		ldi r24,lo8(__c.2830)
+ 408 02da 90E0      		ldi r25,hi8(__c.2830)
+ 409 02dc 0E94 0000 		call UART_puts_p
+ 410 02e0 8B81      		ldd r24,Y+3
+ 411 02e2 0E94 0000 		call UART_puthex8
+ 412 02e6 80E0      		ldi r24,lo8(__c.2832)
+ 413 02e8 90E0      		ldi r25,hi8(__c.2832)
+ 414 02ea 0E94 0000 		call UART_puts_p
+ 415 02ee 80E0      		ldi r24,lo8(__c.2834)
+ 416 02f0 90E0      		ldi r25,hi8(__c.2834)
+ 417 02f2 0E94 0000 		call UART_puts_p
+ 418 02f6 8F81      		ldd r24,Y+7
+ 419 02f8 8F73      		andi r24,lo8(63)
+ 420 02fa 0E94 0000 		call UART_puthex8
+ 421 02fe 8885      		ldd r24,Y+8
+ 422 0300 0E94 0000 		call UART_puthex8
+ 423 0304 8985      		ldd r24,Y+9
+ 424 0306 0E94 0000 		call UART_puthex8
+ 425 030a 80E0      		ldi r24,lo8(__c.2836)
+ 426 030c 90E0      		ldi r25,hi8(__c.2836)
+ 427               	/* epilogue start */
+ 428 030e DF91      		pop r29
+ 429 0310 CF91      		pop r28
+ 430 0312 0C94 0000 		jmp UART_puts_p
+ 432               	.global	SD_printBuf
+ 434               	SD_printBuf:
+ 435 0316 EF92      		push r14
+ 436 0318 FF92      		push r15
+ 437 031a 1F93      		push r17
+ 438 031c CF93      		push r28
+ 439 031e DF93      		push r29
+ 440               	/* prologue: function */
+ 441               	/* frame size = 0 */
+ 442               	/* stack size = 5 */
+ 443               	.L__stack_usage = 5
+ 444 0320 EC01      		movw r28,r24
+ 445 0322 7C01      		movw r14,r24
+ 446 0324 8EEF      		ldi r24,-2
+ 447 0326 F81A      		sub r15,r24
+ 448 0328 10E0      		ldi r17,0
+ 449               	.L113:
+ 450 032a 8991      		ld r24,Y+
+ 451 032c 0E94 0000 		call UART_puthex8
+ 452 0330 1331      		cpi r17,lo8(19)
+ 453 0332 01F4      		brne .L111
+ 454 0334 80E0      		ldi r24,lo8(__c.2843)
+ 455 0336 90E0      		ldi r25,hi8(__c.2843)
+ 456 0338 0E94 0000 		call UART_puts_p
+ 457 033c 10E0      		ldi r17,0
+ 458 033e 00C0      		rjmp .L112
+ 459               	.L111:
+ 460 0340 80E2      		ldi r24,lo8(32)
+ 461 0342 0E94 0000 		call UART_putc
+ 462 0346 1F5F      		subi r17,lo8(-(1))
+ 463               	.L112:
+ 464 0348 EC16      		cp r14,r28
+ 465 034a FD06      		cpc r15,r29
+ 466 034c 01F4      		brne .L113
+ 467 034e 80E0      		ldi r24,lo8(__c.2848)
+ 468 0350 90E0      		ldi r25,hi8(__c.2848)
+ 469               	/* epilogue start */
+ 470 0352 DF91      		pop r29
+ 471 0354 CF91      		pop r28
+ 472 0356 1F91      		pop r17
+ 473 0358 FF90      		pop r15
+ 474 035a EF90      		pop r14
+ 475 035c 0C94 0000 		jmp UART_puts_p
+ 477               	.global	SD_printDataErrToken
+ 479               	SD_printDataErrToken:
+ 480 0360 CF93      		push r28
+ 481               	/* prologue: function */
+ 482               	/* frame size = 0 */
+ 483               	/* stack size = 1 */
+ 484               	.L__stack_usage = 1
+ 485 0362 C82F      		mov r28,r24
+ 486 0364 807F      		andi r24,lo8(-16)
+ 487 0366 01F0      		breq .L116
+ 488 0368 80E0      		ldi r24,lo8(__c.2853)
+ 489 036a 90E0      		ldi r25,hi8(__c.2853)
+ 490 036c 0E94 0000 		call UART_puts_p
+ 491               	.L116:
+ 492 0370 C3FF      		sbrs r28,3
+ 493 0372 00C0      		rjmp .L117
+ 494 0374 80E0      		ldi r24,lo8(__c.2855)
+ 495 0376 90E0      		ldi r25,hi8(__c.2855)
+ 496 0378 0E94 0000 		call UART_puts_p
+ 497               	.L117:
+ 498 037c C2FF      		sbrs r28,2
+ 499 037e 00C0      		rjmp .L118
+ 500 0380 80E0      		ldi r24,lo8(__c.2857)
+ 501 0382 90E0      		ldi r25,hi8(__c.2857)
+ 502 0384 0E94 0000 		call UART_puts_p
+ 503               	.L118:
+ 504 0388 C1FF      		sbrs r28,1
+ 505 038a 00C0      		rjmp .L119
+ 506 038c 80E0      		ldi r24,lo8(__c.2859)
+ 507 038e 90E0      		ldi r25,hi8(__c.2859)
+ 508 0390 0E94 0000 		call UART_puts_p
+ 509               	.L119:
+ 510 0394 C0FF      		sbrs r28,0
+ 511 0396 00C0      		rjmp .L115
+ 512 0398 80E0      		ldi r24,lo8(__c.2861)
+ 513 039a 90E0      		ldi r25,hi8(__c.2861)
+ 514               	/* epilogue start */
+ 515 039c CF91      		pop r28
+ 516 039e 0C94 0000 		jmp UART_puts_p
+ 517               	.L115:
+ 518               	/* epilogue start */
+ 519 03a2 CF91      		pop r28
+ 520 03a4 0895      		ret
+ 522               		.section	.progmem.data,"a",@progbits
+ 525               	__c.2861:
+ 526 0000 0945 7272 		.string	"\tError\r\n"
+ 526      6F72 0D0A 
+ 526      00
+ 529               	__c.2859:
+ 530 0009 0943 4320 		.string	"\tCC Error\r\n"
+ 530      4572 726F 
+ 530      720D 0A00 
+ 533               	__c.2857:
+ 534 0015 0943 6172 		.string	"\tCard ECC failed\r\n"
+ 534      6420 4543 
+ 534      4320 6661 
+ 534      696C 6564 
+ 534      0D0A 00
+ 537               	__c.2855:
+ 538 0028 0944 6174 		.string	"\tData out of range\r\n"
+ 538      6120 6F75 
+ 538      7420 6F66 
+ 538      2072 616E 
+ 538      6765 0D0A 
+ 541               	__c.2853:
+ 542 003d 094E 6F74 		.string	"\tNot Error token\r\n"
+ 542      2045 7272 
+ 542      6F72 2074 
+ 542      6F6B 656E 
+ 542      0D0A 00
+ 545               	__c.2848:
+ 546 0050 0D0A 00   		.string	"\r\n"
+ 549               	__c.2843:
+ 550 0053 0D0A 00   		.string	"\r\n"
+ 553               	__c.2836:
+ 554 0056 0D0A 00   		.string	"\r\n"
+ 557               	__c.2834:
+ 558 0059 0944 6576 		.string	"\tDevice Size: "
+ 558      6963 6520 
+ 558      5369 7A65 
+ 558      3A20 00
+ 561               	__c.2832:
+ 562 0068 0D0A 00   		.string	"\r\n"
+ 565               	__c.2830:
+ 566 006b 0954 5241 		.string	"\tTRAN_SPEED: "
+ 566      4E5F 5350 
+ 566      4545 443A 
+ 566      2000 
+ 569               	__c.2828:
+ 570 0079 0D0A 00   		.string	"\r\n"
+ 573               	__c.2826:
+ 574 007c 094E 5341 		.string	"\tNSAC: "
+ 574      433A 2000 
+ 577               	__c.2824:
+ 578 0084 0D0A 00   		.string	"\r\n"
+ 581               	__c.2822:
+ 582 0087 0954 4141 		.string	"\tTAAC: "
+ 582      433A 2000 
+ 585               	__c.2820:
+ 586 008f 0D0A 00   		.string	"\r\n"
+ 589               	__c.2818:
+ 590 0092 0943 5344 		.string	"\tCSD Structure: "
+ 590      2053 7472 
+ 590      7563 7475 
+ 590      7265 3A20 
+ 590      00
+ 593               	__c.2816:
+ 594 00a3 4353 443A 		.string	"CSD:\r\n"
+ 594      0D0A 00
+ 597               	__c.2811:
+ 598 00aa 0D0A 00   		.string	"\r\n"
+ 601               	__c.2809:
+ 602 00ad 0945 6368 		.string	"\tEcho: "
+ 602      6F3A 2000 
+ 605               	__c.2807:
+ 606 00b5 4E4F 5420 		.string	"NOT DEFINED\r\n"
+ 606      4445 4649 
+ 606      4E45 440D 
+ 606      0A00 
+ 609               	__c.2805:
+ 610 00c3 5245 5345 		.string	"RESERVED\r\n"
+ 610      5256 4544 
+ 610      0D0A 00
+ 613               	__c.2803:
+ 614 00ce 5245 5345 		.string	"RESERVED\r\n"
+ 614      5256 4544 
+ 614      0D0A 00
+ 617               	__c.2801:
+ 618 00d9 4C4F 5720 		.string	"LOW VOLTAGE\r\n"
+ 618      564F 4C54 
+ 618      4147 450D 
+ 618      0A00 
+ 621               	__c.2799:
+ 622 00e7 322E 372D 		.string	"2.7-3.6V\r\n"
+ 622      332E 3656 
+ 622      0D0A 00
+ 625               	__c.2797:
+ 626 00f2 0956 6F6C 		.string	"\tVoltage Accepted: "
+ 626      7461 6765 
+ 626      2041 6363 
+ 626      6570 7465 
+ 626      643A 2000 
+ 629               	__c.2795:
+ 630 0106 0D0A 00   		.string	"\r\n"
+ 633               	__c.2793:
+ 634 0109 0943 6F6D 		.string	"\tCommand Version: "
+ 634      6D61 6E64 
+ 634      2056 6572 
+ 634      7369 6F6E 
+ 634      3A20 00
+ 637               	__c.2788:
+ 638 011c 0D0A 00   		.string	"\r\n"
+ 641               	__c.2786:
+ 642 011f 332E 352D 		.string	"3.5-3.6"
+ 642      332E 3600 
+ 645               	__c.2784:
+ 646 0127 332E 342D 		.string	"3.4-3.5, "
+ 646      332E 352C 
+ 646      2000 
+ 649               	__c.2782:
+ 650 0131 332E 332D 		.string	"3.3-3.4, "
+ 650      332E 342C 
+ 650      2000 
+ 653               	__c.2780:
+ 654 013b 332E 322D 		.string	"3.2-3.3, "
+ 654      332E 332C 
+ 654      2000 
+ 657               	__c.2778:
+ 658 0145 332E 312D 		.string	"3.1-3.2, "
+ 658      332E 322C 
+ 658      2000 
+ 661               	__c.2776:
+ 662 014f 332E 302D 		.string	"3.0-3.1, "
+ 662      332E 312C 
+ 662      2000 
+ 665               	__c.2774:
+ 666 0159 322E 392D 		.string	"2.9-3.0, "
+ 666      332E 302C 
+ 666      2000 
+ 669               	__c.2772:
+ 670 0163 322E 382D 		.string	"2.8-2.9, "
+ 670      322E 392C 
+ 670      2000 
+ 673               	__c.2770:
+ 674 016d 322E 372D 		.string	"2.7-2.8, "
+ 674      322E 382C 
+ 674      2000 
+ 677               	__c.2768:
+ 678 0177 0956 4444 		.string	"\tVDD Window: "
+ 678      2057 696E 
+ 678      646F 773A 
+ 678      2000 
+ 681               	__c.2766:
+ 682 0185 4255 5359 		.string	"BUSY\r\n"
+ 682      0D0A 00
+ 685               	__c.2764:
+ 686 018c 300D 0A00 		.string	"0\r\n"
+ 689               	__c.2762:
+ 690 0190 310D 0A00 		.string	"1\r\n"
+ 693               	__c.2760:
+ 694 0194 0943 4353 		.string	"\tCCS Status: "
+ 694      2053 7461 
+ 694      7475 733A 
+ 694      2000 
+ 697               	__c.2758:
+ 698 01a2 5245 4144 		.string	"READY\r\n"
+ 698      590D 0A00 
+ 701               	__c.2756:
+ 702 01aa 0943 6172 		.string	"\tCard Power Up Status: "
+ 702      6420 506F 
+ 702      7765 7220 
+ 702      5570 2053 
+ 702      7461 7475 
+ 705               	__c.2751:
+ 706 01c2 0943 6172 		.string	"\tCard Locked\r\n"
+ 706      6420 4C6F 
+ 706      636B 6564 
+ 706      0D0A 00
+ 709               	__c.2749:
+ 710 01d1 0957 5020 		.string	"\tWP Erase Skip\r\n"
+ 710      4572 6173 
+ 710      6520 536B 
+ 710      6970 0D0A 
+ 710      00
+ 713               	__c.2747:
+ 714 01e2 0945 7272 		.string	"\tError\r\n"
+ 714      6F72 0D0A 
+ 714      00
+ 717               	__c.2745:
+ 718 01eb 0943 4320 		.string	"\tCC Error\r\n"
+ 718      4572 726F 
+ 718      720D 0A00 
+ 721               	__c.2743:
+ 722 01f7 0945 4343 		.string	"\tECC Failed\r\n"
+ 722      2046 6169 
+ 722      6C65 640D 
+ 722      0A00 
+ 725               	__c.2741:
+ 726 0205 0957 5020 		.string	"\tWP Violation\r\n"
+ 726      5669 6F6C 
+ 726      6174 696F 
+ 726      6E0D 0A00 
+ 729               	__c.2739:
+ 730 0215 0945 7261 		.string	"\tErase Parameter\r\n"
+ 730      7365 2050 
+ 730      6172 616D 
+ 730      6574 6572 
+ 730      0D0A 00
+ 733               	__c.2737:
+ 734 0228 094F 7574 		.string	"\tOut of Range\r\n"
+ 734      206F 6620 
+ 734      5261 6E67 
+ 734      650D 0A00 
+ 737               	__c.2735:
+ 738 0238 094E 6F20 		.string	"\tNo R2 Error\r\n"
+ 738      5232 2045 
+ 738      7272 6F72 
+ 738      0D0A 00
+ 741               	__c.2730:
+ 742 0247 0949 6E20 		.string	"\tIn Idle State\r\n"
+ 742      4964 6C65 
+ 742      2053 7461 
+ 742      7465 0D0A 
+ 742      00
+ 745               	__c.2728:
+ 746 0258 0945 7261 		.string	"\tErase Reset Error\r\n"
+ 746      7365 2052 
+ 746      6573 6574 
+ 746      2045 7272 
+ 746      6F72 0D0A 
+ 749               	__c.2726:
+ 750 026d 0949 6C6C 		.string	"\tIllegal Command\r\n"
+ 750      6567 616C 
+ 750      2043 6F6D 
+ 750      6D61 6E64 
+ 750      0D0A 00
+ 753               	__c.2724:
+ 754 0280 0943 5243 		.string	"\tCRC Error\r\n"
+ 754      2045 7272 
+ 754      6F72 0D0A 
+ 754      00
+ 757               	__c.2722:
+ 758 028d 0945 7261 		.string	"\tErase Sequence Error\r\n"
+ 758      7365 2053 
+ 758      6571 7565 
+ 758      6E63 6520 
+ 758      4572 726F 
+ 761               	__c.2720:
+ 762 02a5 0941 6464 		.string	"\tAddress Error\r\n"
+ 762      7265 7373 
+ 762      2045 7272 
+ 762      6F72 0D0A 
+ 762      00
+ 765               	__c.2718:
+ 766 02b6 0950 6172 		.string	"\tParameter Error\r\n"
+ 766      616D 6574 
+ 766      6572 2045 
+ 766      7272 6F72 
+ 766      0D0A 00
+ 769               	__c.2716:
+ 770 02c9 0943 6172 		.string	"\tCard Ready\r\n"
+ 770      6420 5265 
+ 770      6164 790D 
+ 770      0A00 
+ 773               	__c.2714:
+ 774 02d7 0945 7272 		.string	"\tError: MSB = 1\r\n"
+ 774      6F72 3A20 
+ 774      4D53 4220 
+ 774      3D20 310D 
+ 774      0A00 
+ 777               	__c.2712:
+ 778 02e9 094E 6F20 		.string	"\tNo response\r\n"
+ 778      7265 7370 
+ 778      6F6E 7365 
+ 778      0D0A 00
+ 779               		.ident	"GCC: (GNU) 5.4.0"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 sdprint.c
+     /tmp/ccxGuvjz.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccxGuvjz.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccxGuvjz.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccxGuvjz.s:5      *ABS*:000000000000003b __RAMPZ__
+     /tmp/ccxGuvjz.s:6      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccxGuvjz.s:7      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccxGuvjz.s:11     .text:0000000000000000 SD_printR1
+     /tmp/ccxGuvjz.s:777    .progmem.data:00000000000002e9 __c.2712
+     /tmp/ccxGuvjz.s:773    .progmem.data:00000000000002d7 __c.2714
+     /tmp/ccxGuvjz.s:769    .progmem.data:00000000000002c9 __c.2716
+     /tmp/ccxGuvjz.s:765    .progmem.data:00000000000002b6 __c.2718
+     /tmp/ccxGuvjz.s:761    .progmem.data:00000000000002a5 __c.2720
+     /tmp/ccxGuvjz.s:757    .progmem.data:000000000000028d __c.2722
+     /tmp/ccxGuvjz.s:753    .progmem.data:0000000000000280 __c.2724
+     /tmp/ccxGuvjz.s:749    .progmem.data:000000000000026d __c.2726
+     /tmp/ccxGuvjz.s:745    .progmem.data:0000000000000258 __c.2728
+     /tmp/ccxGuvjz.s:741    .progmem.data:0000000000000247 __c.2730
+     /tmp/ccxGuvjz.s:87     .text:000000000000007c SD_printR2
+     /tmp/ccxGuvjz.s:737    .progmem.data:0000000000000238 __c.2735
+     /tmp/ccxGuvjz.s:733    .progmem.data:0000000000000228 __c.2737
+     /tmp/ccxGuvjz.s:729    .progmem.data:0000000000000215 __c.2739
+     /tmp/ccxGuvjz.s:725    .progmem.data:0000000000000205 __c.2741
+     /tmp/ccxGuvjz.s:721    .progmem.data:00000000000001f7 __c.2743
+     /tmp/ccxGuvjz.s:717    .progmem.data:00000000000001eb __c.2745
+     /tmp/ccxGuvjz.s:713    .progmem.data:00000000000001e2 __c.2747
+     /tmp/ccxGuvjz.s:709    .progmem.data:00000000000001d1 __c.2749
+     /tmp/ccxGuvjz.s:705    .progmem.data:00000000000001c2 __c.2751
+     /tmp/ccxGuvjz.s:174    .text:0000000000000118 SD_printR3
+     /tmp/ccxGuvjz.s:701    .progmem.data:00000000000001aa __c.2756
+     /tmp/ccxGuvjz.s:697    .progmem.data:00000000000001a2 __c.2758
+     /tmp/ccxGuvjz.s:693    .progmem.data:0000000000000194 __c.2760
+     /tmp/ccxGuvjz.s:689    .progmem.data:0000000000000190 __c.2762
+     /tmp/ccxGuvjz.s:685    .progmem.data:000000000000018c __c.2764
+     /tmp/ccxGuvjz.s:681    .progmem.data:0000000000000185 __c.2766
+     /tmp/ccxGuvjz.s:677    .progmem.data:0000000000000177 __c.2768
+     /tmp/ccxGuvjz.s:673    .progmem.data:000000000000016d __c.2770
+     /tmp/ccxGuvjz.s:669    .progmem.data:0000000000000163 __c.2772
+     /tmp/ccxGuvjz.s:665    .progmem.data:0000000000000159 __c.2774
+     /tmp/ccxGuvjz.s:661    .progmem.data:000000000000014f __c.2776
+     /tmp/ccxGuvjz.s:657    .progmem.data:0000000000000145 __c.2778
+     /tmp/ccxGuvjz.s:653    .progmem.data:000000000000013b __c.2780
+     /tmp/ccxGuvjz.s:649    .progmem.data:0000000000000131 __c.2782
+     /tmp/ccxGuvjz.s:645    .progmem.data:0000000000000127 __c.2784
+     /tmp/ccxGuvjz.s:641    .progmem.data:000000000000011f __c.2786
+     /tmp/ccxGuvjz.s:637    .progmem.data:000000000000011c __c.2788
+     /tmp/ccxGuvjz.s:295    .text:00000000000001fc SD_printR7
+     /tmp/ccxGuvjz.s:633    .progmem.data:0000000000000109 __c.2793
+     /tmp/ccxGuvjz.s:629    .progmem.data:0000000000000106 __c.2795
+     /tmp/ccxGuvjz.s:625    .progmem.data:00000000000000f2 __c.2797
+     /tmp/ccxGuvjz.s:621    .progmem.data:00000000000000e7 __c.2799
+     /tmp/ccxGuvjz.s:617    .progmem.data:00000000000000d9 __c.2801
+     /tmp/ccxGuvjz.s:613    .progmem.data:00000000000000ce __c.2803
+     /tmp/ccxGuvjz.s:609    .progmem.data:00000000000000c3 __c.2805
+     /tmp/ccxGuvjz.s:605    .progmem.data:00000000000000b5 __c.2807
+     /tmp/ccxGuvjz.s:601    .progmem.data:00000000000000ad __c.2809
+     /tmp/ccxGuvjz.s:597    .progmem.data:00000000000000aa __c.2811
+     /tmp/ccxGuvjz.s:368    .text:0000000000000280 SD_printCSD
+     /tmp/ccxGuvjz.s:593    .progmem.data:00000000000000a3 __c.2816
+     /tmp/ccxGuvjz.s:589    .progmem.data:0000000000000092 __c.2818
+     /tmp/ccxGuvjz.s:585    .progmem.data:000000000000008f __c.2820
+     /tmp/ccxGuvjz.s:581    .progmem.data:0000000000000087 __c.2822
+     /tmp/ccxGuvjz.s:577    .progmem.data:0000000000000084 __c.2824
+     /tmp/ccxGuvjz.s:573    .progmem.data:000000000000007c __c.2826
+     /tmp/ccxGuvjz.s:569    .progmem.data:0000000000000079 __c.2828
+     /tmp/ccxGuvjz.s:565    .progmem.data:000000000000006b __c.2830
+     /tmp/ccxGuvjz.s:561    .progmem.data:0000000000000068 __c.2832
+     /tmp/ccxGuvjz.s:557    .progmem.data:0000000000000059 __c.2834
+     /tmp/ccxGuvjz.s:553    .progmem.data:0000000000000056 __c.2836
+     /tmp/ccxGuvjz.s:434    .text:0000000000000316 SD_printBuf
+     /tmp/ccxGuvjz.s:549    .progmem.data:0000000000000053 __c.2843
+     /tmp/ccxGuvjz.s:545    .progmem.data:0000000000000050 __c.2848
+     /tmp/ccxGuvjz.s:479    .text:0000000000000360 SD_printDataErrToken
+     /tmp/ccxGuvjz.s:541    .progmem.data:000000000000003d __c.2853
+     /tmp/ccxGuvjz.s:537    .progmem.data:0000000000000028 __c.2855
+     /tmp/ccxGuvjz.s:533    .progmem.data:0000000000000015 __c.2857
+     /tmp/ccxGuvjz.s:529    .progmem.data:0000000000000009 __c.2859
+     /tmp/ccxGuvjz.s:525    .progmem.data:0000000000000000 __c.2861
+
+UNDEFINED SYMBOLS
+UART_puts_p
+UART_puthex8
+UART_putc

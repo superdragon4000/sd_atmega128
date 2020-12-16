@@ -1,0 +1,52 @@
+   1               		.file	"spi.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__RAMPZ__ = 0x3b
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.text
+   9               	.global	SPI_init
+  11               	SPI_init:
+  12               	/* prologue: function */
+  13               	/* frame size = 0 */
+  14               	/* stack size = 0 */
+  15               	.L__stack_usage = 0
+  16 0000 24B1      		in r18,0x4
+  17 0002 2C62      		ori r18,lo8(44)
+  18 0004 24B9      		out 0x4,r18
+  19 0006 249A      		sbi 0x4,4
+  20 0008 2CB5      		in r18,0x2c
+  21 000a 2064      		ori r18,lo8(64)
+  22 000c 922B      		or r25,r18
+  23 000e 9CBD      		out 0x2c,r25
+  24 0010 9DB5      		in r25,0x2d
+  25 0012 892B      		or r24,r25
+  26 0014 8DBD      		out 0x2d,r24
+  27 0016 0895      		ret
+  29               	.global	SPI_transfer
+  31               	SPI_transfer:
+  32               	/* prologue: function */
+  33               	/* frame size = 0 */
+  34               	/* stack size = 0 */
+  35               	.L__stack_usage = 0
+  36 0018 8EBD      		out 0x2e,r24
+  37               	.L3:
+  38 001a 0DB4      		in __tmp_reg__,0x2d
+  39 001c 07FE      		sbrs __tmp_reg__,7
+  40 001e 00C0      		rjmp .L3
+  41 0020 8EB5      		in r24,0x2e
+  42 0022 0895      		ret
+  44               		.ident	"GCC: (GNU) 5.4.0"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 spi.c
+     /tmp/ccFhhRLt.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccFhhRLt.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccFhhRLt.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccFhhRLt.s:5      *ABS*:000000000000003b __RAMPZ__
+     /tmp/ccFhhRLt.s:6      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccFhhRLt.s:7      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccFhhRLt.s:11     .text:0000000000000000 SPI_init
+     /tmp/ccFhhRLt.s:31     .text:0000000000000018 SPI_transfer
+
+NO UNDEFINED SYMBOLS
